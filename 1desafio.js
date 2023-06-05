@@ -23,7 +23,11 @@ getNextID = () => {
 }
 addProducts = (title, description, price,thumbnail,code,stock) => {
     const codigoUsado = this.products.some((product)=> product.code === code);
-    if(codigoUsado){
+    const campoVacio = this.products.values((product)=> product.title === "" || product.description === "" || product.price === "" || product.thumbnail ==="" || product.code === "" || product.stock === "");
+    if(campoVacio) {
+        console.log("Por Favor complete todos los campos")
+    }
+    else if (codigoUsado){
         console.log(`el producto ${title} ya existe, revise su codigo`)
     }
     else{
@@ -43,6 +47,7 @@ getProductsByID(id) {
 
 const productos = new ProductManager()
 productos.addProducts("zapatilla", "nike air", 150, "No thumbnail","a515", 15) 
+productos.addProducts("nike air", 150, "No thumbnail","a515", ) 
 productos.addProducts("remera","Camiseta Barcelona", 100,"No thumbnail","b45",30)
 productos.addProducts("gorra","red bull team", 20,"No thumbnail","c12", 10)
 productos.addProducts("pantalon", "sport", 70, "No thumbnail", "c12", 50)
