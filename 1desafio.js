@@ -23,8 +23,8 @@ getNextID = () => {
 }
 addProducts = (title, description, price,thumbnail,code,stock) => {
     const codigoUsado = this.products.some((product)=> product.code === code);
-    const campoVacio = this.products.values((product)=> product.title === "" || product.description === "" || product.price === "" || product.thumbnail ==="" || product.code === "" || product.stock === "");
-    if(campoVacio) {
+    
+    if(!title || !description || !price || !thumbnail || !code || !stock) {
         console.log("Por Favor complete todos los campos")
     }
     else if (codigoUsado){
