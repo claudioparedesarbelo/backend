@@ -8,13 +8,12 @@ class ProductManager{
 }
     
 getNextID = async () => {
-    const data = await this.getProduct()
-    const count = data.length
+    const count = await this.path.length
     
     if (count > 0) {
 
         
-        return data[count - 1].id + 1
+        return this.path[count - 1].id + 1
     } else {
         return 1
     }
