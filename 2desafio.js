@@ -8,19 +8,21 @@ class ProductManager{
 }
     
 getNextID = async () => {
-    const count = await this.path.length
+    const data = await this.getProduct()
+    const count = await data.length
     
     if (count > 0) {
 
         
-        return this.path[count - 1].id + 1
+        return data[count - 1].id + 1
     } else {
         return 1
     }
+    
 }
 
 addProducts = async (title, description, price, thumbnail, code, stock) => {
-                const productID = this.getNextID();
+                const productID = await this.getNextID();
                 const products = {id:productID, title, description, price, thumbnail, code, stock}
                 const list = await this.getProduct()
                 list.push(products)
