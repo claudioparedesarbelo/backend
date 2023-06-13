@@ -31,7 +31,7 @@ addProducts = async (title, description, price, thumbnail, code, stock) => {
 
 getProduct = async () => {
     try {
-        const data = await fs.promises.readFile(this.path, this.format)
+        const data = await fs.promises.readFile(this.path, 'utf-8')
         const dataObj = JSON.parse(data)
         return dataObj
     } catch (error) {
@@ -39,14 +39,47 @@ getProduct = async () => {
         return []
     }
     }
-   
+getProductsByID = async (id) => {
+        try{
+        const productByID = await fs.promises.readFile(this.path, 'utf-8')
+        const dataObj = JSON.parse(productByID)
+        const filtroID = dataObj.find((producto) => producto.id === id);
+        return filtroID      
+         
+         } catch (error) {
+         console.log("not found")}
+         }
+
+ updateProduct = async (id) => {
+    try{
+        const productByID = await fs.promises.readFile(this.path, 'utf-8')
+        const dataObj = JSON.parse(productByID)
+        const filtroID = dataObj.find((producto) => producto.id === id);
+        await fs.promises.unlink(filtroID)
+        
+    }catch (error) {
+        console.log("file not exist")}
+        }
+ 
+
+
+
 }
+
+    
+    
+   
+
 async function run() {
     const product = new ProductManager('productos.json')
     await product.addProducts('zapatilla', 'adidas pro max', 150, 'no thumbnail', 'b314', ' 13')
     await product.addProducts('pantalon', 'nike barcelona', 50, 'no thumbnail', 'p304', ' 10')
     await product.addProducts('campera', 'puma redBullRacing', 30, 'no thumbnail', 'c704', ' 15')
     console.log(await product.getProduct())
+    console.log('Filtro x producto')
+    console.log(await product.getProductsByID(2))
+    console.log(await product.updateProduct(1))
+
 }
 
 run()
