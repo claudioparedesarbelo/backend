@@ -68,12 +68,12 @@ updateProduct = async (id, key, nuevoValor) => {
      }
 
 
-deleteProduct = async (id) => {
+/* deleteProduct = async (id) => {
      const data = await this.getProduct()
      const dataObj = data.filter(product=>product.id != id)
      await fs.promises.writeFile(this.path, data)
     }
-    
+     */
 
 }
 
