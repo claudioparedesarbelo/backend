@@ -49,33 +49,34 @@ getProductsByID = async (id) => {
          console.log("not found")}
          }
 
-
 updateProduct = async (id, key, nuevoValor) => { 
-    const listUpdate = await this.getProduct(); 
+        const listUpdate = await this.getProduct(); 
+        
+        const itemParaActualizar = listUpdate.find((producto) => producto.id === id); 
+        
+        if (!itemParaActualizar) { 
+                console.log('no se encuentra ese id'); 
+                return; 
+        } 
+        
+        itemParaActualizar[key] = nuevoValor; 
+        
+        await fs.promises.writeFile(this.path, JSON.stringify(listUpdate)); 
+        
+        console.log('archivo actualizado:', itemParaActualizar);
+        }
 
-    const itemParaActualizar = listUpdate.find((producto) => producto.id === id); 
-
-    if (!itemParaActualizar) { 
-        console.log('no se encuentra ese id'); 
-        return; 
-    } 
-
-    itemParaActualizar[key] = nuevoValor; 
-
-    await fs.promises.writeFile(this.path, JSON.stringify(listUpdate)); 
-
-    console.log('archivo actualizado:', itemParaActualizar); 
-     }
 
 
-/* deleteProduct = async (id) => {
+deleteProduct = async (id) => {
      const data = await this.getProduct()
      const dataObj = data.filter(product=>product.id != id)
-     await fs.promises.writeFile(this.path, data)
+     await fs.promises.writeFile(this.path, JSON.stringify(dataObj))
     }
-     */
+    }
+    
 
-}
+
 
     
     
@@ -89,7 +90,7 @@ async function run() {
     console.log(await product.getProduct())
     console.log('Filtro x producto')
     console.log(await product.getProductsByID(2))
-    await product.updateProduct(1, 'title', 'gorra')
+    await product.deleteProduct (3)
     
     
 
