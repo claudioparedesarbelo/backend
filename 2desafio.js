@@ -49,9 +49,8 @@ getProductsByID = async (id) => {
          console.log("not found")}
          }
 
-updateProduct = async (id, key, nuevoValor) => { 
+updateProduct = async (id, title, description, price, thumbnail, code, stock ) => { 
         const listUpdate = await this.getProduct(); 
-        
         const itemParaActualizar = listUpdate.find((producto) => producto.id === id); 
         
         if (!itemParaActualizar) { 
@@ -59,11 +58,13 @@ updateProduct = async (id, key, nuevoValor) => {
                 return; 
         } 
         
-        itemParaActualizar[key] = nuevoValor; 
+        const newProducts = {id, title, description, price, thumbnail, code, stock}
         
-        await fs.promises.writeFile(this.path, JSON.stringify(listUpdate)); 
+       
         
-        console.log('archivo actualizado:', itemParaActualizar);
+       await fs.promises.writeFile(this.path, JSON.stringify(listUpdate)); 
+        
+       console.log('archivo actualizado:', newProducts);
         }
 
 
@@ -71,6 +72,7 @@ updateProduct = async (id, key, nuevoValor) => {
 deleteProduct = async (id) => {
      const data = await this.getProduct()
      const dataObj = data.filter(product=>product.id != id)
+     console.log('Elemento Eliminado')
      await fs.promises.writeFile(this.path, JSON.stringify(dataObj))
     }
     }
@@ -89,7 +91,9 @@ async function run() {
     await product.addProducts('campera', 'puma redBullRacing', 30, 'no thumbnail', 'c704', 15)
     console.log(await product.getProduct())
     console.log('Filtro x producto')
-    console.log(await product.getProductsByID(2))
+    console.log(await product.getProductsByID(1))
+    await product.updateProduct(2, 'gorra','puma racing', 25, 'no thumbnail', 'g345', 34)
+    
     await product.deleteProduct (3)
     
     
