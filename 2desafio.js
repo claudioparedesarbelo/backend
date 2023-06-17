@@ -59,15 +59,21 @@ updateProduct = async (id, product) => {
         }; 
         
         const newProduct = product
-        const listaModificada = listUpdate.map(product=>product.id === newProduct.id)
+        const listaModificada = listUpdate.map(product=>product.id === newProduct.id);
+        const nuevaLista = listUpdate.findIndex((elemento, nuevaLista) => {
+            if (elemento.id === id)
+            return listUpdate[nuevaLista] = newProduct;
+            console.log('Se actualizo el producto ', newProduct)
+        })
+        
         
                 
         
 
-        await fs.promises.writeFile(this.path, JSON.stringify(listaModificada))
+        await fs.promises.writeFile(this.path, JSON.stringify(listUpdate))
         
-        }
-
+    
+    }
 
 
 
