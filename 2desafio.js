@@ -49,23 +49,25 @@ getProductsByID = async (id) => {
          console.log("not found")}
          }
 
-updateProduct = async (id, title, description, price, thumbnail, code, stock ) => { 
+updateProduct = async (id, product) => { 
         const listUpdate = await this.getProduct(); 
         const itemParaActualizar = listUpdate.find((producto) => producto.id === id); 
         
         if (!itemParaActualizar) { 
                 console.log('no se encuentra ese id'); 
                 return; 
-        } 
+        }; 
         
-        const newProducts = {id, title, description, price, thumbnail, code, stock}
+        const newProduct = product
+        const listaModificada = listUpdate.map(product=>product.id === newProduct.id)
         
-       
+                
         
-       await fs.promises.writeFile(this.path, JSON.stringify(listUpdate)); 
+
+        await fs.promises.writeFile(this.path, JSON.stringify(listaModificada))
         
-       console.log('archivo actualizado:', newProducts);
         }
+
 
 
 
@@ -92,9 +94,10 @@ async function run() {
     console.log(await product.getProduct())
     console.log('Filtro x producto')
     console.log(await product.getProductsByID(1))
-    await product.updateProduct(2, 'gorra','puma racing', 25, 'no thumbnail', 'g345', 34)
-    
     await product.deleteProduct (3)
+    await product.updateProduct(2, {id:2, title: 'gorra', description: 'puma racing', price: 25, thumbnail: 'no thumbnail', code: 'g567', stock: 35})
+    
+    
     
     
 
